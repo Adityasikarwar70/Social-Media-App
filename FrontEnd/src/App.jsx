@@ -12,8 +12,8 @@ function App() {
   return (
     <BrowserRouter>
     <ChakraProvider>
-   <div className='w-full h-screen flex justify-center bg-black '>
-    <div className=' max-w-[720px] h-full w-full '>
+   <div className='w-full h-full min-h-[100vh] flex justify-center bg-black '>
+    <div className=' max-w-[720px] h-full w-full px-2 '>
     <Header/>
     <Routes>
     <Route path='/:username' element={<User/>} />

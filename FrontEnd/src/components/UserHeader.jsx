@@ -31,19 +31,19 @@ const UserHeader = () => {
     <section>
       <div className=" flex items-center justify-between">
         <div className=" flex flex-col gap-1">
-          <h1 className="text-3xl font-semibold ">FULL NAME</h1>
-          <div className="flex  gap-3 text-sm items-center">
+          <h1 className=" text-lg md:text-3xl font-semibold ">FULL NAME</h1>
+          <div className="flex  gap-3 text-[10px] md:text-sm items-center">
             <h1>@Username</h1>
             <h1 className="bg-gray-800 px-2 py-1 rounded-full">instagram.net</h1>
           </div>
         </div>
-        <div className=" rounded-full overflow-hidden"><img src={PFP} alt="" className=" w-[100px] h-[100px] md:w-[120px] md:h-[120px] object-cover rounded-full" /></div>
+        <div className=" rounded-full overflow-hidden"><img src={PFP} alt="" className=" w-[50px] h-[50px] md:w-[120px] md:h-[120px] object-cover rounded-full" /></div>
       </div>
       <div>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, quidem.</p>
+        <p className=" text-sm md:text-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, quidem.</p>
       </div>
       <div className=" flex items-center mt-3 justify-between">
-      <div className=" flex  items-center gap-3  text-gray-600 ">
+      <div className=" flex  items-center gap-3  text-gray-600 text-[12px] md:text-lg ">
         <h2>2.5K followers</h2>
         <GoDotFill />
         <a href="#" className=" hover:text-gray-500">Instagram.com</a>
