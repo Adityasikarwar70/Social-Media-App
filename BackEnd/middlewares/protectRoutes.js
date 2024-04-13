@@ -12,7 +12,7 @@ const protectRoute = async(req, res,next)=>{
         next();
     } catch (error) {
         res.status(404).json({message:error.message})
-        console.log("User Login error");
+        console.log("User protect error");
     }
 }
 export default protectRoute;
