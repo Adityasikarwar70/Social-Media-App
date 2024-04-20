@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import bcrypt from 'bcryptjs'
 import generateToken from "../utils/helpers/generateToken.js";
+import {v2 as cloudinary} from "cloudinary"
 
 //signup user
 export const signup = async(req,res)=>{
@@ -32,7 +33,7 @@ export const signup = async(req,res)=>{
 				username: newUser.username,
 				mobile: newUser.mobile,
 				bio: newUser.bio,
-				profilePic: newUser.profilePic,
+				profileimage: newUser.profileimage,
             })
         }else{
 			res.status(400).json({ error: "Invalid user data" });
@@ -58,8 +59,11 @@ export const login= async(req,res)=>{
         res.status(200).json({
             _id:user._id,
             name:user.name,
+            email:user.email,
             username:user.username,
-            email:user.email
+            bio:user.bio,
+            profileimage:user.profileimage,
+            mobile:user.mobile
         })
 
         
@@ -115,7 +119,8 @@ export const followUnfollow = async(req,res)=>{
 
 // to update user details
 export const update = async(req,res)=>{
-    const {name ,email,username,password,profileimage,mobile,bio} = req.body;
+    const {name ,email,username,password,mobile,bio} = req.body;
+    let {profileimage} = req.body;
     const userId = req.user._id
     try {
         let user = await User.findById(userId);
@@ -129,6 +134,13 @@ export const update = async(req,res)=>{
             const hashedPassword = await bcrypt.hash(password,salt);
             user.password = hashedPassword;
         }
+        if(profileimage){
+            if(user.profileimage){
+                await cloudinary.uploader.destroy(user.profileimage.split("/").pop().split(".")[0]);
+            }
+            const uploadResponse = await cloudinary.uploader.upload(profileimage);
+            profileimage = uploadResponse.secure_url;
+        }
 
         user.name = name || user.name
         user.email = email || user.email
@@ -138,7 +150,8 @@ export const update = async(req,res)=>{
         user.bio = bio || user.bio
 
         user= await user.save()
-        res.status(200).json({message:"Profile Updated Successfully" , user})
+        user.password = null;
+        res.status(200).json(user)
         
 
     } catch (err) {
