@@ -11,6 +11,7 @@ const UpdateProfile = () => {
   const imgRef = useRef(null)
   const toast =useToast();
   const {handleImageChange , imgUrl} = UsePreviewImage()
+ 
 
   const handleChange = (e) => {
     setFormData({
@@ -65,10 +66,10 @@ const handleSubmit= async (e) =>{
    
     <>
     <div className="w-full flex  flex-col justify-center items-center gap-5">
-      <h1 className=" text-white text-2xl text-center">
+      <h1 className=" text-white text-2xl text-center font-semibold">
         Update Profile
       </h1>
-      <form   className="flex flex-col gap-3 py-3 w-[400px] " onSubmit={handleSubmit}>
+      <form   className="flex flex-col gap-3 py-3 w-[400px] text-white " onSubmit={handleSubmit}>
             
             <div
               className="w-full flex items-center justify-center gap-3 " >
