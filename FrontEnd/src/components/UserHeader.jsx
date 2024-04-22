@@ -13,6 +13,7 @@ const UserHeader = ({ user }) => {
   const currentUser = useRecoilValue(userAtom);
   const [following, setfollowing] = useState(user.followers.includes(currentUser?._id));
   
+  
 
   const copylink = () => {
     const currentUrl = window.location.href;
@@ -100,7 +101,7 @@ const UserHeader = ({ user }) => {
           <img
             src={user.profileimage}
             alt=""
-            className=" w-[50px] h-[50px] md:w-[120px] md:h-[120px] object-cover rounded-full"
+            className=" w-[70px] h-[70px] md:w-[120px] md:h-[120px] object-cover rounded-full"
           />
         </div>
       </div>
@@ -144,6 +145,7 @@ const UserHeader = ({ user }) => {
           <h1>Replies</h1>
         </div>
       </div>
+      
     </section>
   );
 };

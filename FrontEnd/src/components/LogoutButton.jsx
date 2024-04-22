@@ -28,6 +28,7 @@ const LogoutButton = () => {
             } 
             localStorage.removeItem("user-threads")
             setUser(null)
+           
             
     }catch (error) {
             console.log(error);
@@ -35,7 +36,7 @@ const LogoutButton = () => {
     }
   return (
     <div className=" flex">
-        <button onClick={handleLogout} className="bg-slate-400 text-sm px-2 py-1  rounded-md hover:bg-slate-500 ">
+        <button onClick={handleLogout} className="bg-rose-400 text-sm px-2 py-2  rounded-md hover:bg-rose-500 drop-shadow-xl">
         Logout
         </button>
     </div>

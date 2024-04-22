@@ -1,14 +1,39 @@
 import { userAtom } from "../atoms/userAtom"
 import { useRecoilValue } from "recoil"
 import LogoutButton from "./LogoutButton"
+import CreatePost from "./CreatePost"
+import {Link} from "react-router-dom"
+import { AiFillHome } from "react-icons/ai";
+import { CgProfile } from "react-icons/cg";
+
 
 const Header = () => {
   const user = useRecoilValue(userAtom)
+
   return (
+    <div className="flex flex-col ">
     <nav className=" w-full my-5 text-center text-2xl font-semibold text-white flex items-center justify-between ">
-        <h1>LOGO</h1>
+        <img src="/assets/LOGO2.png" alt="LOGO" className=" h-[30px]" />
+        <div className=" flex gap-2">
+
+        {user && <CreatePost />}
         {user && <LogoutButton/>}
+        </div>
+        
     </nav>
+    
+      {user && (
+        <div className=" text-3xl text-white  flex flex-row  items-center justify-between px-5 pb-2 mb-2 border-gray-600 border-b-2 border-opacity-25">
+          <Link to={'/'}>
+          <AiFillHome className=" hover:text-gray-200 " />
+          </Link>
+          <Link to={`${user.username}`}>
+          <CgProfile className=" hover:text-gray-200 " />
+          </Link>
+        </div>
+      )}
+    
+    </div>
   )
 }
 

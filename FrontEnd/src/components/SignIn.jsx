@@ -8,6 +8,7 @@ const SignIn = () => {
     const setAuthScreen = useSetRecoilState(authScreenAtom)
     const setUser = useSetRecoilState(userAtom)
     const [formData, setFormData] = useState({})
+    const [loading, setLoading] = useState(null)
     const handleChange = (e) => {
       setFormData({
         ...formData,
@@ -19,6 +20,7 @@ const SignIn = () => {
     
     const handleLogin=async(e)=>{
       e.preventDefault();
+      setLoading(true)
       try {
         const res = await fetch('/api/users/login', {
           method: "POST",
@@ -46,6 +48,7 @@ const SignIn = () => {
       } catch (error) {
         console.log(error);
       }
+      setLoading(false)
     }
     return (
         <div className="w-full py-10 flex items-center justify-center">
@@ -106,7 +109,7 @@ const SignIn = () => {
                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     
                   >
-                    Sign In
+                    {loading ? "Signing Up .." : "Signup"}
                   </button>
                 </div>
               </form>

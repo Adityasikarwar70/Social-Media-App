@@ -2,6 +2,7 @@ import User from "../models/user.model.js";
 import bcrypt from 'bcryptjs'
 import generateToken from "../utils/helpers/generateToken.js";
 import {v2 as cloudinary} from "cloudinary"
+import mongoose from "mongoose";
 
 //signup user
 export const signup = async(req,res)=>{
@@ -79,10 +80,12 @@ export const logout = async(req,res)=>{
     try {
         res.cookie("Auth","",{maxAge:1});
         res.status(200).json({message : "User loggedOut Successfully"})
+        
     } catch (err) {
         res.status(404).json({error:err.message})
         console.log("User logout error");
     }
+    
 }
 
 // to follow or unfollow user
@@ -164,10 +167,18 @@ export const update = async(req,res)=>{
 
 // get the user details 
 export const getUserProfile =async(req,res)=>{
-    const {username} = req.params;
+    const {query} = req.params;
     try {
-        const user = await User.findOne({username}).select("-password").select("-updatedAt");
+        let user;
+        // const user = await User.findOne({username}).select("-password").select("-updatedAt");
+        if(mongoose.Types.ObjectId.isValid(query)){
+            // query is id
+            user = await User.findOne({_id:query}).select("-password").select("-updatedAt");
+        }else{
+            // query is username
+            user = await User.findOne({username:query}).select("-password").select("-updatedAt");
 
+        }
         if(!user) return res.status(400).json({error:"User not found"});
         
         res.status(200).json(user);
