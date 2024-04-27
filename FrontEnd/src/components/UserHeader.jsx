@@ -28,6 +28,15 @@ const UserHeader = ({ user }) => {
   };
 
   const handleFollowUnfollow = async()=>{
+    if (!currentUser) {
+      toast({
+        title: "You Must be Logged in to like a post",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return
+    }
     try {
       const res = await fetch(`/api/users/follow/${user._id}`,{
         method:"POST",
@@ -64,7 +73,7 @@ const UserHeader = ({ user }) => {
           duration:3000,
           isClosable:true, 
         });
-        user.followers.push(currentUser._id);
+        user.followers.push(currentUser?._id);
       }
       setfollowing(!following);
 
@@ -87,11 +96,11 @@ const UserHeader = ({ user }) => {
           <h1 className=" text-lg md:text-3xl font-semibold ">{user.name}</h1>
           <div className="flex mt-2 gap-3 text-[10px] md:text-sm items-center">
             <h1>@{user.username}</h1>
-            {currentUser._id === user._id && ( 
+            {currentUser?._id === user._id && ( 
               <Link to={'/update'} className="bg-[#131010] hover:bg-[#1c1818] px-2 py-[7px] rounded-lg">Update Profile</Link>
             )
             }
-            {currentUser._id !== user._id && ( 
+            {currentUser?._id !== user._id && ( 
               <button onClick={handleFollowUnfollow} className="bg-[#452eb6] hover:bg-[#4b3aa0] px-2 py-[7px] font-semibold rounded-lg">{following ? "Unfollow" : "Follow"}</button>
             )
             }

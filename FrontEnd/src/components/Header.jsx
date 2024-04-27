@@ -15,7 +15,11 @@ const Header = () => {
     <nav className=" w-full my-5 text-center text-2xl font-semibold text-white flex items-center justify-between ">
         <img src="/assets/LOGO2.png" alt="LOGO" className=" h-[30px]" />
         <div className=" flex gap-2">
-
+        {!user && (
+          <Link to={'/auth'} className="bg-blue-700 text-sm px-2 py-2  rounded-md hover:bg-blue-800 drop-shadow-xl">
+          SignIn
+          </Link>
+        )}
         {user && <CreatePost />}
         {user && <LogoutButton/>}
         </div>

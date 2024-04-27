@@ -6,13 +6,12 @@ const HomePage = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true)
   const toast =useToast();
-
+  
 useEffect(() => {
   const getFeedPosts = async()=>{
-
     setLoading(true);
     try {
-      const res = await fetch("/api/posts/feed")
+      const res = await fetch('/api/posts/feed');
       const data = await res.json();
       console.log(data);
       setPosts(data)
@@ -29,8 +28,9 @@ useEffect(() => {
   }
   getFeedPosts();
 }, [toast])
+console.log(posts);
 
-
+if(!posts) return null
   return (
     <div className=" flex justify-center items-center text-white">
     {loading && (
@@ -40,7 +40,7 @@ useEffect(() => {
     )}
 
     {!loading && posts.length ==0 && (
-      <div className="text-lg w-full text-center"><h1>Follow Some Users to see their Posts</h1></div>
+      <div className="text-lg   w-full "><h1 className="text-center">Follow Some Users to see their Posts</h1></div>
     )}
     <div className="w-full flex flex-col">
     
@@ -48,7 +48,7 @@ useEffect(() => {
       posts.map((post)=>(
         <UserPosts key={post._id}  post={post} postedBy={post.postedBy}/>
       ))
-    }
+    } 
     </div>
     </div>
   )

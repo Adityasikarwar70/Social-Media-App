@@ -1,10 +1,12 @@
 import { useSetRecoilState } from "recoil";
 import { userAtom } from "../atoms/userAtom";
 import { useToast } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 const LogoutButton = () => {
     const setUser = useSetRecoilState(userAtom)
     const toast =useToast();
+    const navigate = useNavigate()
     const handleLogout =async()=>{
         try {
 
@@ -28,6 +30,7 @@ const LogoutButton = () => {
             } 
             localStorage.removeItem("user-threads")
             setUser(null)
+            navigate('/auth')
            
             
     }catch (error) {

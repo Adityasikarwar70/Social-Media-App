@@ -1,21 +1,30 @@
 import { useEffect, useState } from "react"
-import Posts from "../components/Posts"
 import UserHeader from "../components/UserHeader"
 import { useParams } from "react-router-dom"
-import { useToast } from "@chakra-ui/react"
+import { Flex, Spinner, useToast } from "@chakra-ui/react"
+import UserPosts from "../components/UserPosts"
+import useGetUserProfile from "../Hooks/useGetUserProfile.js"
+import { useRecoilState } from "recoil"
+import postsAtom from "../atoms/postsAtom.js"
+
 
 
 
 
 const User = () => {
-  const [user, setUser] = useState(null)
+const {user , loading} = useGetUserProfile()
 const {username} = useParams();
 const toast =useToast();
+const [posts, setPosts] = useRecoilState(postsAtom)
+const [fetching, setFetching] = useState(true)
 
   useEffect(()=>{
-    const getUser = async()=>{
+    
+
+    const getPosts = async()=>{
+      setFetching(true)
       try {
-        const res = await fetch(`/api/users/profile/${username}`);
+        const res = await fetch(`/api/posts/user/${username}`);
         const data = await res.json();
         if(data.error){
           toast({
@@ -28,32 +37,48 @@ const toast =useToast();
           });
           return
         }
-        setUser(data)
+        setPosts(data)
         console.log(data);
       } catch (error) {
         toast({
           title:"Error",
           status:"error",
-          description:error,
+          description:error.message,
           duration:3000,
           isClosable:true, 
            
         });
+      }finally{
+        setFetching(false)
       }
-     
     }
-    getUser();
-  },[toast, username])
-  if(!user) return null
+
+
+    getPosts()
+  },[toast, username ,setPosts])
+  if(!user && loading) {
+    return (
+			<Flex justifyContent={"center"}>
+				<Spinner size={"xl"} />
+			</Flex>
+		);
+  }
+  if (!user && !loading) return <h1>User not found</h1>;
   
   return (
     <div className="text-white w-full ">
       <UserHeader user={user}  />
-      <Posts likes={1500} replies={488} postTitle="Lorem ipsum dolor sit amet" postImg="/assets/home.jpg"  />
-      <Posts likes={1500} replies={488} postTitle="Lorem ipsum dolor sit amet" postImg="/assets/home.jpg"  />
-      <Posts likes={1500} replies={488} postTitle="Lorem ipsum dolor sit amet" postImg="/assets/home.jpg"  />
-      <Posts likes={1500} replies={488} postTitle="Lorem ipsum dolor sit amet" postImg=""  />
-      
+      {!fetching && posts.length ===0 && <h1 className=" text-center mt-4 font-bold text-gray-600">User Don&apos;t have any posts</h1>}
+      {fetching && (
+        <div className="flex items-center justify-center mt-5">
+          <Spinner size={"xl"}/>
+        </div>
+      )}
+      {
+      posts.map((post)=>(
+        <UserPosts key={post._id}  post={post} postedBy={post.postedBy}/>
+      ))
+    }
     </div>
   )
 }
