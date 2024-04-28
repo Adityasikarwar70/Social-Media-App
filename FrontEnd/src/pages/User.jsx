@@ -76,7 +76,7 @@ const [fetching, setFetching] = useState(true)
       )}
       {
       posts.map((post)=>(
-        <UserPosts key={post._id}  post={post} postedBy={post.postedBy}/>
+        <UserPosts key={post._id}  post={post} postedBy={post.postedBy}   />
       ))
     }
     </div>

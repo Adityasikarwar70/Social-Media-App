@@ -28,7 +28,7 @@ const PostPage = () => {
 
   useEffect(() => {
 		const getPost = async () => {
-			
+		
 			try {
 				const res = await fetch(`/api/posts/${pid}`);
 				const data = await res.json();
@@ -122,7 +122,7 @@ const PostPage = () => {
           <h1>{user.username}</h1>
         </div>
         <div className="flex items-center gap-2">
-              <h1 className="text-xs opacity-50">{formatDistanceToNow(new Date(currentPost.createdAt))} ago</h1>
+              <h1 className="text-xs opacity-50">{formatDistanceToNow(new Date(currentPost?.createdAt))} ago</h1>
               {currentUser._id === user?._id && 
               (<MdDeleteForever onClick={handleDeletePost} className="text-2xl text-rose-500 hover:text-rose-600"/>)
               }
@@ -131,7 +131,8 @@ const PostPage = () => {
       <h1>
         {currentPost.text} 
       </h1>
-      <img src={currentPost.image} alt="image" className=" rounded-lg w-full h-[400px] object-cover" />
+      {currentPost.image ? (<img src={currentPost.image} alt="image" className=" rounded-lg w-full h-[400px] object-cover" />) : null}
+      
       <div>
         <ActionsButtons post={currentPost} />
         
@@ -145,7 +146,8 @@ const PostPage = () => {
       </div>
       <div>
         {currentPost.replies.map((reply=>(
-          <Comments  key={reply._id} reply={reply} />
+          <Comments  key={reply._id} reply={reply}
+           />
         )))}
       </div>
       

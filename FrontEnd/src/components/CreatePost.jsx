@@ -4,19 +4,23 @@ import { ImCross } from "react-icons/im";
 import { IoImages } from "react-icons/io5";
 import UsePreviewImage from "../Hooks/UsePreviewImage";
 import { useToast } from "@chakra-ui/react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { userAtom } from "../atoms/userAtom";
+import postsAtom from "../atoms/postsAtom";
+import { useParams } from "react-router-dom";
 
 const MAX_CHAR = 500;
 const CreatePost = () => {
-    const toast =useToast();
-    const user = useRecoilValue(userAtom);
+  const toast =useToast();
+  const user = useRecoilValue(userAtom);
   const [isShown, setIsShown] = useState(null);
   const [postText, setPostText] = useState(null);
   const [remainingChar, setRemainingChar] = useState(MAX_CHAR)
   const imageRef = useRef(null);
   const {handleImageChange , imgUrl , setImgUrl} = UsePreviewImage()
   const [loading, setLoading] = useState(null);
+  const [post, setPost] = useRecoilState(postsAtom);
+  const {username} = useParams();
 
 
   const handleShown = () => {
@@ -63,10 +67,13 @@ const CreatePost = () => {
         duration:3000,
         isClosable:true,  
       });
+      if(username === user.username){
+        setPost([data, ...post]);
+      }
       handleShown() 
       setPostText(null)
       setImgUrl(null)
-      
+      location.reload();
       }catch (error) {
         toast({
           title:"Error",
@@ -89,7 +96,8 @@ const CreatePost = () => {
         </button>
       </div>
       {isShown && (
-        <div className=" fixed p-5 z-10 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2  bg-gray-900 w-[350px]  md:w-[600px]  shadow-black shadow-2xl ">
+        <div>
+        <div className=" fixed p-5 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2  bg-gray-900 w-[350px]  md:w-[600px]  shadow-black shadow-2xl z-20 ">
           <div className="flex items-center justify-between">
             <h1>Create Post</h1>
             <ImCross
@@ -124,6 +132,9 @@ const CreatePost = () => {
             <button className="py-1 px-3 bg-green-600 rounded-md mt-3 " onClick={handleCreatePost} >{loading ? "Posting" : "Post"}</button>
             </div>
           </form>
+        </div>
+          <div onClick={handleShown}  className=" fixed w-screen h-screen bg-slate-400 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 z-10 blur-md opacity-50  ">
+        </div>
         </div>
       )}
     </div>

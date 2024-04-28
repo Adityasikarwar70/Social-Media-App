@@ -4,12 +4,15 @@ import { userAtom } from "../atoms/userAtom";
 import { MdOutlineDone } from "react-icons/md";
 import UsePreviewImage from "../Hooks/UsePreviewImage";
 import { useToast } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 const UpdateProfile = () => {
   const [user, setUser ] = useRecoilState(userAtom)
   const [formData, setFormData] = useState({});
   const imgRef = useRef(null)
   const toast =useToast();
+  const [loading, setLoading] = useState(null)
+  const navigate = useNavigate()
   const {handleImageChange , imgUrl} = UsePreviewImage()
  
 
@@ -23,6 +26,7 @@ const UpdateProfile = () => {
 
 const handleSubmit= async (e) =>{
   e.preventDefault();
+  setLoading(true)
   try {
     const res = await fetch(`/api/users/update/${user._id}`,{
     method: "PUT",
@@ -49,6 +53,8 @@ const handleSubmit= async (e) =>{
   });
   setUser(data);
   localStorage.setItem("user-threads",JSON.stringify(data));
+  setLoading(false)
+  navigate(`/${user.username}`)
   
   } catch (error) {
     toast({
@@ -57,6 +63,8 @@ const handleSubmit= async (e) =>{
       duration:3000,
       isClosable:true,  
     });
+  }finally{
+    setLoading(false)
   }
 }
 
@@ -160,7 +168,8 @@ const handleSubmit= async (e) =>{
               type="submit"
               className=" bg-green-500 flex items-center justify-center text-3xl text-white rounded-lg p-2 font-bold  uppercase hover:opacity-80 disabled:opacity-60"
             >
-             <MdOutlineDone />
+              {loading ? "Updating ..." : <MdOutlineDone />}
+             
             </button>
             <p className="text-[10px]  font-semibold text-white text-center">
               After Updation you can&apos;t roll back

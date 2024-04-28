@@ -9,7 +9,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { userAtom } from "../atoms/userAtom";
 import postsAtom from "../atoms/postsAtom";
 
-const UserPosts = ({post , postedBy}) => {
+const UserPosts = ({post , postedBy }) => {
   
     const [user, setUser] = useState(null)
     const toast =useToast();
@@ -56,7 +56,7 @@ const UserPosts = ({post , postedBy}) => {
       try {
         e.preventDefault();
         if(!window.confirm("You want to delete Your post ?")) return;
-        const res = await fetch(`/api/posts/${post.id}`,{
+        const res = await fetch(`/api/posts/${post._id}`,{
           method:"DELETE",
         })
         const data = await res.json();
@@ -107,7 +107,7 @@ const UserPosts = ({post , postedBy}) => {
         </div>
         <div className="w-3/4 flex flex-col gap-5">
           <div className=" flex items-center justify-between gap-5">
-            <h1 className=" text-xl mt-3 font-semibold" onClick={(e)=>{
+            <h1 className=" text-xl mt-3 font-semibold text-rose-200" onClick={(e)=>{
                 e.preventDefault();
                 navigate(`/${user.username}`)
             }} >{user?.name}</h1>
@@ -118,7 +118,7 @@ const UserPosts = ({post , postedBy}) => {
               }
             </div>
           </div>
-          <h1 className="text-sm text-slate-500 ">
+          <h1 className="text-ld text-slate-300 font-semibold ">
             {post.text}
           </h1>
           {post.image && (

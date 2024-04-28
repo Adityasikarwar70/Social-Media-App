@@ -5,6 +5,7 @@ import CreatePost from "./CreatePost"
 import {Link} from "react-router-dom"
 import { AiFillHome } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
+import { BsChatDotsFill } from "react-icons/bs";
 
 
 const Header = () => {
@@ -31,9 +32,15 @@ const Header = () => {
           <Link to={'/'}>
           <AiFillHome className=" hover:text-gray-200 " />
           </Link>
+          <div className=" flex items-center justify-between gap-10">
           <Link to={`${user.username}`}>
           <CgProfile className=" hover:text-gray-200 " />
           </Link>
+          <Link to={'/chat'}>
+          <BsChatDotsFill className=" hover:text-gray-200 text-rose-300 " />
+          </Link>
+
+          </div>
         </div>
       )}
     
