@@ -7,7 +7,7 @@ import { AiFillHome } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { BsChatDotsFill } from "react-icons/bs";
 
-
+ 
 const Header = () => {
   const user = useRecoilValue(userAtom)
 

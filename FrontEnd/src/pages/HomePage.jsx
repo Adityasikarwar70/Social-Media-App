@@ -41,7 +41,7 @@ if(!posts) return null
         <Spinner size={'xl'} />
       </div>
     )}
-
+ 
     {!loading && posts.length ==0 && (
       <div className="fixed transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"><h1 className="text-center">Follow Some Users to see their Posts</h1></div>
     )}

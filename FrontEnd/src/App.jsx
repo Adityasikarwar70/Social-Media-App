@@ -18,7 +18,7 @@ const user = useRecoilValue(userAtom)
     <BrowserRouter>
     
     <ChakraProvider>
-   <div className='w-full h-full min-h-[100vh] flex justify-center bg-black '>
+   <div className='w-full h-full min-h-[100vh] flex justify-center bg-black overflow-auto '>
     <div className=' max-w-[720px] h-full w-full px-2 '>
     <Header/>
     

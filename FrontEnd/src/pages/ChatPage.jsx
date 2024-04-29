@@ -3,10 +3,11 @@ import { MdOutlineScreenSearchDesktop } from "react-icons/md";
 import Message from "../components/Message";
 import { BiSolidMessageSquareX } from "react-icons/bi";
 import MessageItem from "../components/MessageItem";
+import MessageInput from "../components/MessageInput";
 
 const ChatPage = () => {
   return (
-    <div className=" flex flex-row gap2 items-center text-white">
+    <div className=" flex flex-row  items-center  text-white">
       <div className=" flex flex-col gap-2  w-[220px] h-[550px] border-white border-r-[1px] border-opacity-10">
         <h1 className="">Messages</h1>
         <form className="flex items-center border-b-[1px] border-white border-opacity-50 mr-1">
@@ -49,7 +50,7 @@ const ChatPage = () => {
         )}
 
         <div className="w-full h-full  ">
-          <div className="flex gap-2 items-center font-semibold border-white border-b-[1px] border-opacity-20 p-2">
+          <div className="flex gap-2 items-center font-semibold border-white border-b-[1px] border-opacity-20 px-2 py-1">
             <img
               src="https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png"
               alt="pfp"
@@ -57,7 +58,7 @@ const ChatPage = () => {
             />
             <h1>Aditya Singh</h1>
           </div>
-          <div className=" w-full h-[450px]  flex flex-col gap-4 py-5 overflow-auto  no-scrollbar">
+          <div className=" w-full h-[450px]  flex flex-col gap-4 py-5 px-1 overflow-auto  ">
             {false &&
               [...Array(20)].map((_, i) => (
                 <Flex
@@ -77,8 +78,16 @@ const ChatPage = () => {
                   {i % 2 !== 0 && <SkeletonCircle size={7} />}
                 </Flex>
               ))}
-              <MessageItem/>
+              <MessageItem ownMessage={true}/>
+              <MessageItem ownMessage={false}/>
+              <MessageItem ownMessage={true}/>
+              <MessageItem ownMessage={false}/>
+              <MessageItem ownMessage={true}/>
+              <MessageItem ownMessage={false}/>
+              <MessageItem ownMessage={true}/>
+              <MessageItem ownMessage={false}/>
           </div>
+          <MessageInput/>
         </div>
       </div>
     </div>
