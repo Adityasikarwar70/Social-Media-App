@@ -1,28 +1,28 @@
-import { useEffect, useState } from "react"
-import UserHeader from "../components/UserHeader"
-import { useParams } from "react-router-dom"
-import { Flex, Spinner, useToast } from "@chakra-ui/react"
-import UserPosts from "../components/UserPosts"
-import useGetUserProfile from "../Hooks/useGetUserProfile.js"
-import { useRecoilState } from "recoil"
-import postsAtom from "../atoms/postsAtom.js"
+import { useEffect, useState } from "react";
+import UserHeader from "../components/UserHeader";
+import { useParams } from "react-router-dom";
+import { Flex, Spinner, useToast } from "@chakra-ui/react";
+import UserPosts from "../components/UserPosts";
+import useGetUserProfile from "../Hooks/useGetUserProfile.js";
+import { useRecoilState } from "recoil";
+import postsAtom from "../atoms/postsAtom.js";
 
 
 
 
 
 const User = () => {
-const {user , loading} = useGetUserProfile()
+const {user , loading} = useGetUserProfile();
 const {username} = useParams();
 const toast =useToast();
-const [posts, setPosts] = useRecoilState(postsAtom)
-const [fetching, setFetching] = useState(true)
+const [posts, setPosts] = useRecoilState(postsAtom);
+const [fetching, setFetching] = useState(true);
 
   useEffect(()=>{
     
 
     const getPosts = async()=>{
-      setFetching(true)
+      setFetching(true);
       try {
         const res = await fetch(`/api/posts/user/${username}`);
         const data = await res.json();
@@ -37,7 +37,7 @@ const [fetching, setFetching] = useState(true)
           });
           return
         }
-        setPosts(data)
+        setPosts(data);
         console.log(data);
       } catch (error) {
         toast({
@@ -49,13 +49,13 @@ const [fetching, setFetching] = useState(true)
            
         });
       }finally{
-        setFetching(false)
+        setFetching(false);
       }
     }
 
 
     getPosts()
-  },[toast, username ,setPosts])
+  },[toast, username ,setPosts]);
   if(!user && loading) {
     return (
 			<Flex justifyContent={"center"}>
@@ -64,7 +64,7 @@ const [fetching, setFetching] = useState(true)
 		);
   }
   if (!user && !loading) return <h1>User not found</h1>;
-  
+   
   return (
     <div className="text-white w-full ">
       <UserHeader user={user}  />

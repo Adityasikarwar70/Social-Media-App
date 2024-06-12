@@ -4,6 +4,7 @@ import { mongoose } from "mongoose";
 import cookieParser from "cookie-parser";
 import userRoutes from './routes/user.route.js'
 import postRoutes from './routes/post.route.js'
+import messageRoutes from './routes/message.route.js'
 import {v2 as cloudinary} from "cloudinary"
 
 dotenv.config();
@@ -36,3 +37,4 @@ console.log("something went wrong in database connection" , error);
 // Routes 
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
+app.use('/api/messages', messageRoutes);

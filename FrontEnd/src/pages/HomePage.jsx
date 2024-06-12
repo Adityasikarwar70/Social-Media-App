@@ -2,22 +2,22 @@ import { Spinner, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import UserPosts from "../components/UserPosts";
 import { useRecoilState } from "recoil";
-import postsAtom from "../atoms/postsAtom";
+import postsAtom from "../atoms/postsAtom.js";
 
 const HomePage = () => {
-  const [posts, setPosts] = useRecoilState(postsAtom)
-  const [loading, setLoading] = useState(true)
+  const [posts, setPosts] = useRecoilState(postsAtom);
+  const [loading, setLoading] = useState(true);
   const toast =useToast();
   
 useEffect(() => {
   const getFeedPosts = async()=>{
     setLoading(true);
-    setPosts([])
+    setPosts([]);
     try {
       const res = await fetch('/api/posts/feed');
       const data = await res.json();
       console.log(data);
-      setPosts(data)
+      setPosts(data);
     } catch (error) {
       toast({
         title:"Error",
@@ -25,12 +25,12 @@ useEffect(() => {
         duration:3000,
         isClosable:true,  
       });
-    }finally{
-      setLoading(false)
+    }finally{ 
+      setLoading(false);
     }
   }
   getFeedPosts();
-}, [toast , setPosts])
+}, [toast , setPosts]);
 console.log(posts);
 
 if(!posts) return null

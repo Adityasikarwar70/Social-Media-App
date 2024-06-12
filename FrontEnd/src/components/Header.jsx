@@ -1,4 +1,4 @@
-import { userAtom } from "../atoms/userAtom"
+import { userAtom } from "../atoms/userAtom.js"
 import { useRecoilValue } from "recoil"
 import LogoutButton from "./LogoutButton"
 import CreatePost from "./CreatePost"
@@ -9,31 +9,31 @@ import { BsChatDotsFill } from "react-icons/bs";
 
  
 const Header = () => {
-  const user = useRecoilValue(userAtom)
+  const users = useRecoilValue(userAtom)
 
   return (
     <div className="flex flex-col ">
     <nav className=" w-full my-5 text-center text-2xl font-semibold text-white flex items-center justify-between ">
         <img src="/assets/LOGO2.png" alt="LOGO" className=" h-[30px]" />
         <div className=" flex gap-2">
-        {!user && (
+        {!users && (
           <Link to={'/auth'} className="bg-blue-700 text-sm px-2 py-2  rounded-md hover:bg-blue-800 drop-shadow-xl">
           SignIn
           </Link>
         )}
-        {user && <CreatePost />}
-        {user && <LogoutButton/>}
+        {users && <CreatePost />}
+        {users && <LogoutButton/>}
         </div>
         
     </nav>
     
-      {user && (
+      {users && (
         <div className=" text-3xl text-white  flex flex-row  items-center justify-between px-5 pb-2 mb-2 border-gray-600 border-b-2 border-opacity-25">
           <Link to={'/'}>
           <AiFillHome className=" hover:text-gray-200 " />
           </Link>
           <div className=" flex items-center justify-between gap-10">
-          <Link to={`${user.username}`}>
+          <Link to={`${users.username}`}>
           <CgProfile className=" hover:text-gray-200 " />
           </Link>
           <Link to={'/chat'}>
